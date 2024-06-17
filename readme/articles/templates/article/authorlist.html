@@ -1,0 +1,21 @@
+<!-- articles/templates/articles/index.html -->
+
+{% extends "base.html" %}
+
+{% block page_title %}
+    <h3><em>The Usual Suspects</em></h3>
+{% endblock page_title %}
+
+{% block page_info %}
+
+{% endblock page_info %}
+
+{% block page_content %}
+    {% for author in authors %}
+        
+        <small><h4><a href="{% url 'article_author' author.name %}">
+            {{ author.name }} 
+        </a>| {{ author.bio }}</h4>
+    {{ author.roles}}</small>
+    {% endfor %}
+{% endblock page_content %}

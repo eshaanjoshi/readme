@@ -1,0 +1,39 @@
+<!-- articles/templates/articles/index.html -->
+
+{% extends "base.html" %}
+
+{% block page_title %}
+    <h3><em>Carnegie Mellon's Premier Satire Newspaper</em></h3>
+{% endblock page_title %}
+
+{% block page_content %}
+    {% block posts %}
+        {% for post in posts %}
+            <h3><a href="{% url 'article_detail' post.slug post.pk %}">{{ post.title }}</a></h3>
+            <small>
+                Authors:
+                {% for author in post.authors.all %}
+                    <a href="{% url 'article_author' author.name %}">
+                        {{ author.name }}
+                    </a>
+                {% endfor %}
+                <br>
+                
+                {% for issue in post.issues.all %}
+                    <a href="{% url 'article_issue' issue.name %}">
+                        Vol {{ issue.vol }}, Issue {{ issue.num}}
+                    </a>
+                {% endfor %}
+                |
+                {% for category in post.categories.all %}
+                    <a href="{% url 'article_category' category.name %}">
+                        {{ category.name }}
+                    </a>
+                {% endfor %}
+                
+            </small>
+            {% load tag %}
+            <p>{{ post.body|create_md | safe | slice:":400" }}...</p>
+        {% endfor %}
+    {% endblock posts %}
+{% endblock page_content %}

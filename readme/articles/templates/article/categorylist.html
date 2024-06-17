@@ -1,0 +1,19 @@
+<!-- articles/templates/articles/index.html -->
+
+{% extends "base.html" %}
+
+{% block page_title %}
+    <h3><em>The Stuff We Do</em></h3>
+{% endblock page_title %}
+
+{% block page_info %}
+
+{% endblock page_info %}
+
+{% block page_content %}
+    {% for category in categories %}
+        
+        <small><h4><a href="{% url 'article_category' category.name %}">
+            {{ category.name }}</h4></small>
+    {% endfor %}
+{% endblock page_content %}

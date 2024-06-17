@@ -1,0 +1,20 @@
+from django.urls import path
+
+from . import views
+
+urlpatterns = [
+    path("", views.article_index, name="article_index"),
+    path("authors", views.article_author_index, name="article_author_index"),
+    path("tags", views.article_category_index, name="article_category_index"),
+    path("post/<str:slug>/<int:pk>", views.article_detail, name="article_detail"),
+    path("category/<category>/", views.article_category, name="article_category"),
+    path("author/<author>/", views.article_author, name="article_author"),
+    path("issue/<issue>/", views.article_issue, name="article_issue"),
+    path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
+    path('signup/', views.signup_view, name='signup'),
+    path('home', views.home_view, name='home'),
+    path('create-article/', views.create_article_view, name='create_article'),
+    path('article-success/', views.article_success_view, name='article_success'),
+    
+]

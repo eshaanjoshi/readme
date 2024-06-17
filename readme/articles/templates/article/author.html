@@ -1,0 +1,11 @@
+<!-- articles/templates/articles/category.html -->
+
+{% extends "article/index.html" %}
+
+{% block page_title %}
+<h2>{{ author }}</h2>
+{% endblock page_title %}
+
+{% block page_info %}
+    <h7>{{ a.bio }}</h7>
+{% endblock page_info %}

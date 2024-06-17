@@ -1,0 +1,24 @@
+<!-- templates/base.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>KGB Presents: Readme</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">
+    <script type="module" src="https://md-block.verou.me/md-block.js"></script>
+</head>
+<body>
+<h1>KGB Presents: Readme</h1>
+<span>
+<a href='{% url "article_index" %}'>Home</a> | 
+<a href='{% url "article_author_index" %}'>Authors</a> | 
+<a href='{% url "article_category_index" %}'>Tags</a> |
+<a href='{% url "login" %}'>Log In</a>
+</span>
+<hr>
+{% block page_title %}{% endblock page_title %}
+{% block page_info %}{% endblock page_info %}
+{% block page_content %}{% endblock page_content %}
+</body>
+</html>

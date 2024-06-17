@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+<head>
+    <title>Create Article</title></head>{% endblock page_title %}
+{% block page_info %}<em>Welcome {{ user }}</em>{% endblock page_info %}
+{% block page_content %}
+<body>
+    <div class="container">
+        <h2>Create Article</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>{% endblock page_content %}

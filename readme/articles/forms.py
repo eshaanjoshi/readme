@@ -1,7 +1,7 @@
 # blog/forms.py
 
 from django import forms
-from .models import Post
+from .models import Post, Author
 
 class CommentForm(forms.Form):
     author = forms.CharField(
@@ -24,8 +24,8 @@ class ArticleForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'slug': forms.TextInput(attrs={'class': 'form-control'}),
-            'authors': forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}),
-            'issues': forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}),
-            'categories': forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}),
+            'authors': forms.Select(attrs={'class': 'form-control'}),
+            'issues': forms.Select(attrs={'class': 'form-control'}),
+            'categories': forms.Select(attrs={'class': 'form-control'}),
             'body': forms.Textarea(attrs={'class': 'form-control'}),
         }

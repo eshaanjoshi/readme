@@ -4,12 +4,9 @@
     <title>Signup</title>
 </head>
 <body>
-    <h2>Signup</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Signup</button>
-    </form>
-    <a href="{% url 'login' %}">Login</a>
+    <h2>ERROR</h2>
+    Please ask Admin to give you an account!
+    <br>
+    <a href="{% url 'login' %}">Return to login</a>
 </body>
 </html>

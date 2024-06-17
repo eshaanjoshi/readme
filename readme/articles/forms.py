@@ -20,7 +20,7 @@ class CommentForm(forms.Form):
 class ArticleForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'authors', 'issues', 'categories', 'body', 'slug']
+        fields = ['title', 'slug', 'authors', 'issues', 'categories', 'body']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'slug': forms.TextInput(attrs={'class': 'form-control'}),

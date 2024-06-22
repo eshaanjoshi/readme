@@ -4,7 +4,7 @@ import markdown
 from django.db import models
 
 class Category(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=30, unique=True)
 
     class Meta:
         verbose_name_plural = "categories"
@@ -14,6 +14,7 @@ class Category(models.Model):
 
 class Author(models.Model):
     name = models.CharField(max_length=255)
+    img = models.TextField(default="anon.png")
     bio = models.TextField()
     roles = models.TextField()
     class Meta:
@@ -33,13 +34,14 @@ class Issue(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=225)
+
     authors = models.ManyToManyField("Author", related_name="posts")
     body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     categories = models.ManyToManyField("Category", related_name="posts")
     slug = models.SlugField()
-    issues = models.ManyToManyField("Issue", related_name="posts")
+    issues = models.ForeignKey("Issue", on_delete=models.CASCADE)
     def __str__(self) -> str:
         return self.title
 

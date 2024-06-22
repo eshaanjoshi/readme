@@ -15,13 +15,15 @@ def create_new_category(cur, name):
 
 def create_new_issue(cur, theme, num, vol):
 	now = datetime.datetime.now()
-	id = random_with_N_digits(4)
+	id = 4
 	sql = """
     INSERT INTO articles_issue(id, name, num, vol)
 	VALUES(?, ?, ?, ?)
     """
 	cur.execute(sql, (id, theme, num, vol))
 	cur.commit()
+
+
 def add_article(conn, title, slug, author_id, body, issue_id, category_id):
 	now = datetime.datetime.now()
 	id = random_with_N_digits(8)
@@ -73,11 +75,12 @@ try:
 	cursor.execute(sql_query)
 	print("List of tables\n")
 	print(cursor.fetchall())
-	cursor.execute("""SELECT * FROM articles_category""")
+	cursor.execute("""SELECT * FROM articles_issue""")
 	print(cursor.description)
 	title, slug, author_id, body, issue_id, category_id = test_values
 	print(id)#add_article(sqliteConnection, art)
 	print(cursor.fetchall())
+	create_new_issue(sqliteConnection, "a", 3, 4)
 	#create_new_category(sqliteConnection, "Letter from the Editor")
 	#add_article(sqliteConnection, title, slug, author_id, body, issue_id, category_id)
 	

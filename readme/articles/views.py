@@ -4,7 +4,7 @@ import markdown
 # Create your views here.
 
 from django.http import HttpResponseRedirect
-from articles.forms import CommentForm, ArticleForm
+from articles.forms import CommentForm, ArticleForm, CategoryForm
 from articles.models import Post, Comment, Author, Issue, Category
 from django.shortcuts import render, redirect
 
@@ -28,7 +28,7 @@ def article_author_index(request):
     return render(request, "article/authorlist.html", context)
 
 def article_category_index(request):
-    categories = Category.objects.all()
+    categories = Category.objects.all().order_by('name')
     context = {
         "categories": categories,
     }
@@ -60,16 +60,15 @@ def article_author(request, author):
     }
     return render(request, "article/author.html", context)
 
-def article_issue(request, issue):
+def article_issue(request, num, vol):
+    issue = Issue.objects.get(num=num, vol=vol)
     posts = Post.objects.filter(
-        issues__name__contains=issue
+        issues__name__contains=issue.name
     ).order_by("-created_on")
-    issue_info = Issue.objects.filter(
-        name__contains=issue
-    ).first()
+    
     context = {
-        "i": issue_info,
-        "issue": issue,
+        "i": issue,
+        "issue": issue.name,
         "posts": posts,
     }
     return render(request, "article/issue.html", context)
@@ -110,7 +109,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('create_article')
+            return redirect('editor_tools')
         else:
             return render(request, 'article/login.html', {'error': 'Invalid credentials'})
     return render(request, 'article/login.html')
@@ -136,7 +135,7 @@ def home_view(request):
         "user" : user
     }
     
-    return render(request, 'article/create-article.html', context)
+    return render(request, 'article/editor_tools.html', context)
 
 
 def create_article_view(request):
@@ -153,3 +152,21 @@ def create_article_view(request):
 
 def article_success_view(request):
     return render(request, 'article/article_success.html')
+
+
+def create_category(request):
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('article_category_index')  # Redirect to category list view
+    else:
+        form = CategoryForm()
+    return render(request, 'article/create_category.html', {'form': form})
+
+def category_list(request):
+    categories = Category.objects.all()
+    return render(request, 'article/categorylist.html', {'categories': categories})
+
+def editor_tools(request):
+    return render(request, 'article/editor_tools.html')

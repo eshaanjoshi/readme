@@ -3,37 +3,54 @@
 {% extends "base.html" %}
 
 {% block page_title %}
-    <h3><em>Carnegie Mellon's Premier Satire Newspaper</em></h3>
 {% endblock page_title %}
+
 
 {% block page_content %}
     {% block posts %}
+    <div>
+        
+            
+           
+           
         {% for post in posts %}
-            <h3><a href="{% url 'article_detail' post.slug post.pk %}">{{ post.title }}</a></h3>
-            <small>
-                Authors:
-                {% for author in post.authors.all %}
-                    <a href="{% url 'article_author' author.name %}">
-                        {{ author.name }}
-                    </a>
-                {% endfor %}
-                <br>
-                
-                {% for issue in post.issues.all %}
-                    <a href="{% url 'article_issue' issue.name %}">
-                        Vol {{ issue.vol }}, Issue {{ issue.num}}
-                    </a>
-                {% endfor %}
-                |
-                {% for category in post.categories.all %}
+        <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6  col-centered  g-0 border rounded overflow-hidden mb-4 shadow-sm h-md-250 p-4 justify-content-center">
+                       <div class="col p-4 d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-2 text-success-emphasis">
+                        Tags: {% for category in post.categories.all %}
                     <a href="{% url 'article_category' category.name %}">
                         {{ category.name }}
                     </a>
                 {% endfor %}
-                
-            </small>
-            {% load tag %}
+                    </strong>
+                    <h3 class="mb-0" style="font-family: Cutive Mono;"><a href="{% url 'article_detail' post.slug post.pk %}">{{ post.title }}</a></h3>
+                    <div class="mb-1 text-body-secondary">{{post.created_on}}</div>
+                    
+                         <small>
+                            By:
+                            {% for author in post.authors.all %}
+                                <a href="{% url 'article_author' author.name %}">
+                                    {{ author.name }}
+                                </a> | 
+                            {% endfor %}
+                            <a href="{% url 'article_issue' post.issues.num post.issues.vol %}">
+                                Vol {{ post.issues.vol }}, Issue {{ post.issues.num}}
+                            </a>
+                         
+                            
+                        </small>
+                    
+                    {% load tag %}
             <p>{{ post.body|create_md | safe | slice:":400" }}...</p>
-        {% endfor %}
+                </div>
+            </div>
+        </div>
+                {% endfor %}
+            
+            
+    </div>
+        
     {% endblock posts %}
 {% endblock page_content %}

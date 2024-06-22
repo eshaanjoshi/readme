@@ -1,33 +1,53 @@
 <!-- articles/templates/articles/details.html -->
 {% extends "base.html" %}
-
-
 {% block page_title %}
-    <h2>{{ post.title }}</h2>
-{% endblock page_title %}
-
-{% block page_content %}
-    <small>
-        Authors:
-        {% for author in post.authors.all %}
-            <a href="{% url 'article_author' author.name %}">
-                {{ author.name }}
-            </a>
-        {% endfor %}
-        <br>
-        {{ post.created_on.date }} | Categories:
-        {% for category in post.categories.all %}
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6  col-centered  g-0 border rounded overflow-hidden mb-4 shadow-sm h-md-250 p-4 justify-content-center">
+            <strong class="d-inline-block mb-2 text-success-emphasis">
+            Tags:    {% for category in post.categories.all %}
             <a href="{% url 'article_category' category.name %}">
                 {{ category.name }}
             </a>
         {% endfor %}
+            </strong>
+            <h3 class="mb-0" style="font-family: Cutive Mono;">{{ post.title }}</h3>
+            <div class="mb-1 text-body-secondary">{{ post.created_on }}</div>
+            <small>
+            By:
+                {% for author in post.authors.all %}
+            <a href="{% url 'article_author' author.name %}">
+                {{ author.name }}
+        {% endfor %}
+            </a>
+        </small>
+        </div>
+    </div>
+    <h2></h2>
+    <small>
+        
+        
+        <br>
+        
         
     </small>
+{% endblock page_title %}
+{% block page_content %}
+<div>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6  col-centered  g-0 border rounded overflow-hidden mb-4 shadow-sm h-md-250 p-4 justify-content-center">
+            
     <p>
-        
-        {{ content | safe | linebreaks }}
+        {% load tag %}
+        {{ content|create_md | safe | linebreaks }}
     
     </p>
+</div>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6  col-centered  g-0 border rounded overflow-hidden mb-4 shadow-sm h-md-250 p-4 justify-content-center">
+       
     <h3>Leave a comment:</h3>
     <form method="post">
         {% csrf_token %}
@@ -39,14 +59,22 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-
     <h3>Comments:</h3>
     {% for comment in comments %}
+    <div class="col-md-6  col-centered  g-0 border rounded overflow-hidden mb-4 shadow-sm h-md-250 p-4 justify-content-center">
+    
         <p>
             On {{ comment.created_on.date }} <b>{{ comment.author }}</b> wrote:
         </p>
         <p>
             {{ comment.body | linebreaks }}
         </p>
+        
+</div>
     {% endfor %}
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+</div>
 {% endblock page_content %}

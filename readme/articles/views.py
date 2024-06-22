@@ -4,8 +4,8 @@ import markdown
 # Create your views here.
 
 from django.http import HttpResponseRedirect
-from articles.forms import CommentForm, ArticleForm, CategoryForm
-from articles.models import Post, Comment, Author, Issue, Category
+from articles.forms import CommentForm, ArticleForm, CategoryForm, UploadImageForm
+from articles.models import Post, Comment, Author, Issue, Category, Folder, UploadedImage
 from django.shortcuts import render, redirect
 
 from django.contrib.auth import authenticate, login, logout
@@ -170,3 +170,28 @@ def category_list(request):
 
 def editor_tools(request):
     return render(request, 'article/editor_tools.html')
+
+
+def folder_list(request):
+    folders = Folder.objects.all()
+    return render(request, 'article/folder_list.html', {'folders': folders})
+
+def display_folder(request, folder_id):
+    folder = Folder.objects.get(pk=folder_id)
+    return render(request, 'article/display_folder.html', {'folder': folder})
+
+def upload_image(request, folder_id):
+    folder = Folder.objects.get(pk=folder_id)
+    if request.method == 'POST':
+        form = UploadImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            image = form.save(commit=False)
+            image.folder = folder
+            image.save()
+            return redirect('upload_success')  # Redirect to a success page
+    else:
+        form = UploadImageForm()
+    return render(request, 'article/upload_image.html', {'form': form, 'folder': folder})
+
+def upload_success(request):
+    return render(request, 'article/upload_success.html')

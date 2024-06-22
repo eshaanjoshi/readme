@@ -18,4 +18,10 @@ urlpatterns = [
     path('article-success/', views.article_success_view, name='article_success'),
     path('create-category/', views.create_category, name='create_category'),
      path('editor/', views.editor_tools, name='editor_tools'),
+     path('folders/', views.folder_list, name='folder_list'),
+    path('folder/<int:folder_id>/', views.display_folder, name='display_folder'),
+    path('folders/', views.folder_list, name='folder_list'),
+    path('folder/<int:folder_id>/', views.display_folder, name='display_folder'),
+    path('folder/<int:folder_id>/upload/', views.upload_image, name='upload_image'),
+    path('upload/success/', views.upload_success, name='upload_success'),
 ]

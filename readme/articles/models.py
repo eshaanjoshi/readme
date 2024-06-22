@@ -14,9 +14,16 @@ class Category(models.Model):
 
 class Author(models.Model):
     name = models.CharField(max_length=255)
-    img = models.TextField(default="anon.png")
+    img = models.TextField(default="anon.jpg")
     bio = models.TextField()
     roles = models.TextField()
+    pronouns = models.CharField(max_length=255, default="LEFT_EMPTY")
+    major = models.CharField(max_length=255, default="LEFT_EMPTY")
+    year = models.CharField(max_length=255, default="LEFT_EMPTY")
+    location = models.CharField(max_length=255, default="LEFT_EMPTY")
+    fact = models.CharField(max_length=255, default="LEFT_EMPTY")
+    email = models.CharField(max_length=255, default="LEFT_EMPTY")
+    socials = models.CharField(max_length=255, default="LEFT_EMPTY")
     class Meta:
         verbose_name_plural = "authors"
     def __str__(self) -> str:
@@ -26,11 +33,12 @@ class Issue(models.Model):
     name = models.CharField(max_length=255)
     vol = models.IntegerField(default=0)
     num = models.IntegerField(default=0)
-    #name = f"Vol {vol}, Issue {num}"
     class Meta:
         verbose_name_plural = "issues"
     def __str__(self):
         return f"Vol {self.vol}, Issue {self.num}, '{self.name}'"
+    def fold(self):
+        return f"{self.vol}-{self.num}"
 
 class Post(models.Model):
     title = models.CharField(max_length=225)
@@ -52,3 +60,23 @@ class Comment(models.Model):
     post = models.ForeignKey("Post", on_delete=models.CASCADE)
     def __str__(self) -> str:
         return f"{self.author} on '{self.post}'"
+
+
+class Folder(models.Model):
+    name = models.CharField(max_length=100)
+    path = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+    
+class UploadedImage(models.Model):
+    folder = models.ForeignKey(Folder, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='media/static/')
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        self.image.upload_to = self.folder.path  # Set the upload path dynamically
+        super(UploadedImage, self).save(*args, **kwargs)

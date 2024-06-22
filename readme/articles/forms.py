@@ -1,7 +1,7 @@
 # blog/forms.py
 
 from django import forms
-from .models import Post, Author, Category
+from .models import Post, Author, Category, UploadedImage, Folder
 
 class CommentForm(forms.Form):
     author = forms.CharField(
@@ -43,3 +43,11 @@ class CategoryForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter category name'}),
         }
+
+class UploadImageForm(forms.ModelForm):
+    class Meta:
+        model = UploadedImage
+        fields = ['name', 'image']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)

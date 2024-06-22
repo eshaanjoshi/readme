@@ -2,12 +2,32 @@
 
 {% block page_title %}
 <head>
-    <title>Create Article</title></head>{% endblock page_title %}
+    <title>Create Article</title>
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            
+        }
+        .container {
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 1500px; /* Adjusted max-width for a wider container */
+            margin: 0 auto; /* Center align horizontally */
+            padding: 20px; /* Optional: Add padding for spacing */
+        }
+            </style>
+</head>
+
+    {% endblock page_title %}
 {% block page_info %}<em>Welcome {{ user }}</em>{% endblock page_info %}
 {% block page_content %}
 <body>
     <div class="container">
-        <h2>Create Article</h2>
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}

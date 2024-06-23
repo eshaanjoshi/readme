@@ -59,7 +59,7 @@
        
         <p>
             {% load tag %}
-            {{ content|imgswitch:post.issues.fold|create_md | safe |linebreaks }}
+            {{ content|create_md|imgswitch:post.issues.fold | safe |linebreaks }}
         </p>
     </div>
 </div>

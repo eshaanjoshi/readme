@@ -15,8 +15,8 @@ class Category(models.Model):
 class Author(models.Model):
     name = models.CharField(max_length=255)
     img = models.TextField(default="anon.jpg")
-    bio = models.TextField()
-    roles = models.TextField()
+    bio = models.TextField(default="Unknowable and Mysterious")
+    roles = models.TextField(default="Staffwriter")
     pronouns = models.CharField(max_length=255, default="LEFT_EMPTY")
     major = models.CharField(max_length=255, default="LEFT_EMPTY")
     year = models.CharField(max_length=255, default="LEFT_EMPTY")
@@ -69,14 +69,15 @@ class Folder(models.Model):
     def __str__(self):
         return self.name
     
+def upload_location(instance, filename):
+    # Customize the filename here using instance.name
+    filename = f"{instance.folder.path}/{instance.name}"
+    return f"static/{filename}"
+
 class UploadedImage(models.Model):
     folder = models.ForeignKey(Folder, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='media/static/')
+    image = models.ImageField(upload_to=upload_location)
 
     def __str__(self):
         return self.name
-
-    def save(self, *args, **kwargs):
-        self.image.upload_to = self.folder.path  # Set the upload path dynamically
-        super(UploadedImage, self).save(*args, **kwargs)

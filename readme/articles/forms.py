@@ -44,6 +44,7 @@ class CategoryForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter category name'}),
         }
 
+
 class UploadImageForm(forms.ModelForm):
     class Meta:
         model = UploadedImage

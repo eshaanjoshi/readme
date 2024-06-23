@@ -45,7 +45,7 @@
                         </small>
                     
                     {% load tag %}
-            <p>{{ post.body|imgswitch:post.issues.fold|create_md | safe | slice:":400" }}...</p>
+            <p>{{ post.body|slice:":400"|create_md|  imgswitch:post.issues.fold | safe | slice:":400" }}...</p>
                 </div>
             </div>
         </div>

@@ -204,9 +204,10 @@ def upload_image(request, folder_id):
     if request.method == 'POST':
         form = UploadImageForm(request.POST, request.FILES)
         if form.is_valid():
-            image = form.save(commit=False)
-            image.folder = folder
-            image.save()
+            instance = form.save(commit=False)
+            instance.image.name = form['name']
+            instance.folder = folder
+            instance.save()
             return redirect('upload_success')  # Redirect to a success page
     else:
         form = UploadImageForm()

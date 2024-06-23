@@ -1,7 +1,41 @@
-<!-- articles/templates/articles/category.html -->
-
 {% extends "article/index.html" %}
 
 {% block page_title %}
-<h3>Vol {{ i.vol }}, Issue {{ i.num }}:<em> {{ issue }}</em></h3>
+<head>
+    <title>Vol {{ i.vol }}, Issue {{ i.num }}: {{ issue }}</title>
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        .title-block {
+            text-align: center;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .title-block h3 {
+            font-family: 'Special Elite', cursive;
+            font-size: 24px;
+            margin: 0;
+            padding: 10px;
+        }
+        .title-block em {
+            font-style: italic;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="title-block">
+        <h3>Vol {{ i.vol }}, Issue {{ i.num }}:<em> {{ issue }}</em></h3>
+    </div>
+    
+    <!-- Rest of your content goes here -->
+</body>
 {% endblock page_title %}
+

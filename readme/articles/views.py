@@ -35,7 +35,7 @@ def article_category_index(request):
     return render(request, "article/categorylist.html", context)
 
 def article_issues_index(request):
-    issues = Issue.objects.all()
+    issues = Issue.objects.all().order_by('vol')
     issues_by_volume = {}
 
     for issue in issues:

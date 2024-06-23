@@ -15,32 +15,68 @@
             font-family: 'Raleway', sans-serif;
             background-color: #f7f7f700;
             margin: 0;
-            padding: 15px;
+            width: 100%;
         }
 
         .container {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100%;
+            width: 100%;
         }
 
-        .author-container {
-            width: 100%; /* Ensure the container takes full width */
+        .author-container { /* Ensure the container takes full width */
 
             background-color: #fff;
             border-radius: 8px;
+            margin-left: -10%;
+            width: 50%;
+        }
+        @media only screen and (max-width: 600px) {
+            .author-container {
+                width: 100%;
+            }
         }
 
-        .author-item {
+    .author-item {
         position: relative; /* Ensure a relative positioning context */
         background-color: #fff;
         border-radius: 8px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        padding-top: 20px;
         list-style: none;
         text-align: center;
-        width: 75%;
+        display:flex;
+        align-items:center;
+    }
+    .author-square-header {
+        position: relative; /* Ensure a relative positioning context */
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        list-style: none;
+        text-align: center;
+        display:flex;
+        align-items:center;
+    }
+    .author-header {
+        position: relative; /* Ensure a relative positioning context */
+        background-color: #fff;
+        border-radius: 8px;
+        list-style: none;
+        text-align: center;
+        display:flex;
+        align-items:center;
+    }
+    .author-item2 {
+        position: relative; /* Ensure a relative positioning context */
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        list-style: none;
+        text-align: center;
+        width:100%;
+        
+        padding: 10px;
     }
 
     .collapsible-btn {
@@ -51,13 +87,14 @@
         color: #333; /* Text color */
         border: none;
         padding: 15px; /* Padding for button */
-        width: calc(100% - 40px); /* Full width minus padding */
         text-align: center; /* Align text to the left */
         align-items: center;
         cursor: pointer;
         border-radius: 8px 8px 8px 8px; /* Rounded corners, only top */
         font-size: 18px; /* Adjust font size */
         font-weight: bold; /* Bold text */
+        font-family: 'Special Elite', cursive;
+        width: 100%;
     }
 
     .collapsible-btn:hover {
@@ -69,6 +106,7 @@
         overflow: hidden;
         transition: max-height 0.2s ease-out;
         border-radius: 0 0 8px 8px; /* Match the bottom radius */
+        font-family: 'Special Elite', cursive;
     }
 
     .author-item .collapsible-content {
@@ -83,8 +121,10 @@
         align-items: center;
         justify-content: center;
         text-align: center;
-        margin-right: 20px;
+        margin-bottom: 10px;
+        margin-top: 10px;
         flex-shrink: 0;
+
     }
 
     .issue-text {
@@ -96,6 +136,7 @@
     .author-info {
         display: flex;
         flex-direction: column;
+        text-align: center;
     }
 
     .author-name {
@@ -123,8 +164,10 @@
         flex-direction: column;
         align-items: center;
         width: 100%; /* Take full width of parent */
-        padding: 0 10px; /* Minor padding on both sides */
         box-sizing: border-box; /* Include padding and border in total width */
+    
+        
+        min-width: viewport width;
     }
     </style>
 </head>
@@ -135,21 +178,20 @@
     <div class="container">
         <div class="author-container">
             <ul class="author-list">
-                <li class="author-item">
+                <li class="author-header">
                     <h3><em>Our Greatest Hits</em></h3>
                 </li>
                 {% regroup issues by vol as vol_issues %}
                 {% for vol_issue in vol_issues %}
-                <li class="author-item">
+                <li class="author-item2">
                     <div class="collapsible-btn" onclick="toggleVolume(this)">
-                        Volume {{ vol_issue.grouper }}
+                        Vol {{ vol_issue.grouper }}
                     </div>
                     <div class="collapsible-content">
                         {% for issue in vol_issue.list %}
                         <div class="author-item">
                             <div class="issue-square">
                                 <div class="issue-text">
-                                    Vol {{ issue.vol }}<br>
                                     Issue {{ issue.num }}
                                 </div>
                             </div>

@@ -37,7 +37,7 @@
                                     {{ author.name }}
                                 </a> | 
                             {% endfor %}
-                            <a href="{% url 'article_issue' post.issues.num post.issues.vol %}">
+                            <a href="{% url 'article_issue' post.issues.vol post.issues.num %}">
                                 Vol {{ post.issues.vol }}, Issue {{ post.issues.num}}
                             </a>
                          

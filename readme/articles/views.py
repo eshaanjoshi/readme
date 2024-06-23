@@ -34,6 +34,24 @@ def article_category_index(request):
     }
     return render(request, "article/categorylist.html", context)
 
+def article_issues_index(request):
+    issues = Issue.objects.all()
+    issues_by_volume = {}
+
+    for issue in issues:
+        volume = issue.vol
+        if volume not in issues_by_volume:
+            issues_by_volume[volume] = []
+        issues_by_volume[volume].append(issue)
+    
+    return render(request, 'article/issuelist.html', {'issues':issues, 'issues_by_volume': issues_by_volume})
+    #issues = Issue.objects.all().order_by('vol')
+    #context = {
+    #    "issues": issues,
+    #}
+    #return render(request, "article/issuelist.html", context)
+
+
 
 def article_category(request, category):
     posts = Post.objects.filter(
@@ -60,7 +78,7 @@ def article_author(request, author):
     }
     return render(request, "article/author.html", context)
 
-def article_issue(request, num, vol):
+def article_issue(request, vol, num):
     issue = Issue.objects.get(num=num, vol=vol)
     posts = Post.objects.filter(
         issues__name__contains=issue.name
@@ -167,6 +185,7 @@ def create_category(request):
 def category_list(request):
     categories = Category.objects.all()
     return render(request, 'article/categorylist.html', {'categories': categories})
+
 
 def editor_tools(request):
     return render(request, 'article/editor_tools.html')

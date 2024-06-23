@@ -25,7 +25,10 @@ SECRET_KEY = 'django-insecure-b(v6q4y-e+@7&1i$x%)p!z@+jex%fu#&2d_8&7pn29fqvi85ia
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "efb0-149-40-58-147.ngrok-free.app",
+    "d033-87-249-134-134.ngrok-free.app"
+]
 
 
 # Application definition
@@ -114,7 +117,8 @@ USE_I18N = True
 
 USE_TZ = True
 
-
+CSRF_TRUSTED_ORIGINS = ["https://efb0-149-40-58-147.ngrok-free.app", 
+                        " https://d033-87-249-134-134.ngrok-free.app"]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 

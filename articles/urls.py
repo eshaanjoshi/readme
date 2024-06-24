@@ -28,5 +28,5 @@ urlpatterns = [
     path('upload/success/', views.upload_success, name='upload_success'),
     path('article/new/', views.article_create_or_edit, name='article_create'),
     path('article/edit/<int:article_id>/', views.article_create_or_edit, name='article_edit'),
-
+    path('article/publish/', views.article_publish, name='article_publish'),
 ]

@@ -28,12 +28,13 @@ class ArticleForm(forms.ModelForm):
     )
     class Meta:
         model = Post
-        fields = ['title', 'slug', 'authors', 'issues', 'categories', 'body']
+        fields = ['title', 'slug', 'authors', 'issues', 'categories', 'body', 'published']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'slug': forms.TextInput(attrs={'class': 'form-control'}),
             'issues': forms.Select(attrs={'class': 'form-control'}),
             'body': forms.Textarea(attrs={'class': 'form-control'}),
+            'publshed': forms.BooleanField(),
         }
 
 class CategoryForm(forms.ModelForm):
@@ -53,3 +54,7 @@ class UploadImageForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+
+class ArticlePublishForm(forms.Form):
+    publish_ids = forms.ModelMultipleChoiceField(queryset=Post.objects.all(), widget=forms.CheckboxSelectMultiple, required=False)
+    unpublish_ids = forms.ModelMultipleChoiceField(queryset=Post.objects.all(), widget=forms.CheckboxSelectMultiple, required=False)

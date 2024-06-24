@@ -4,7 +4,7 @@ import markdown
 # Create your views here.
 
 from django.http import HttpResponseRedirect
-from articles.forms import CommentForm, ArticleForm, CategoryForm, UploadImageForm
+from articles.forms import CommentForm, ArticleForm, CategoryForm, UploadImageForm, ArticlePublishForm
 from articles.models import Post, Comment, Author, Issue, Category, Folder, UploadedImage
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import login_required
 
 
 def article_index(request):
-    posts = Post.objects.all().order_by("-created_on")
+    posts = Post.objects.all().order_by("-created_on").filter(published=True)
     context = {
         "posts": posts,
     }
@@ -64,7 +64,7 @@ def article_category(request, category):
     posts = Post.objects.filter(
         categories__name__contains=category
 
-    ).order_by("-created_on")
+    ).order_by("-created_on").filter(published=True)
     context = {
         "category": category,
         "posts": posts,
@@ -74,7 +74,7 @@ def article_category(request, category):
 def article_author(request, author):
     posts = Post.objects.filter(
         authors__name__contains=author
-    ).order_by("-created_on")
+    ).order_by("-created_on").filter(published=True)
     aut = Author.objects.filter(
         name__contains=author
     ).first()
@@ -233,7 +233,7 @@ def article_create_or_edit(request, article_id=None):
         form = ArticleForm(request.POST, instance=article)
         if form.is_valid():
             form.save()
-            return redirect('article_list')  # Adjust the redirect target as necessary
+            return redirect('article_issues_edit')  # Adjust the redirect target as necessary
     else:
         form = ArticleForm(instance=article)
 
@@ -241,3 +241,38 @@ def article_create_or_edit(request, article_id=None):
         'form': form,
         'article': article
     })
+
+def article_issues_edit(request):
+    
+    
+    return render(request, 'article/issueedit.html', {'issues':issues, 'issues_by_volume': issues_by_volume})
+
+def article_publish(request):
+    issues = Issue.objects.all().order_by('vol').prefetch_related('articles')
+    issues_by_volume = {}
+
+    for issue in issues:
+        volume = issue.vol
+        if volume not in issues_by_volume:
+            issues_by_volume[volume] = []
+        issues_by_volume[volume].append(issue)
+    form = ArticlePublishForm(request.POST or None)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            publish_ids = form.cleaned_data.get('publish_ids')
+            unpublish_ids = form.cleaned_data.get('unpublish_ids')
+
+            if publish_ids:
+                Post.objects.filter(id__in=publish_ids).update(published=True)
+            if unpublish_ids:
+                Post.objects.filter(id__in=unpublish_ids).update(published=False)
+
+            return redirect('article_publish')  # Redirect to refresh the page after changes
+
+    context = {
+        'issues': issues,
+        'issues_by_volume' : issues_by_volume,
+        'form': form,
+    }
+    return render(request, 'article/article_publish.html', context)

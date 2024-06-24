@@ -50,6 +50,8 @@ class Post(models.Model):
     categories = models.ManyToManyField("Category", related_name="posts")
     slug = models.SlugField()
     issues = models.ForeignKey("Issue", related_name='articles', on_delete=models.CASCADE)
+    published = models.BooleanField(default=False)
+
     def __str__(self) -> str:
         return self.title
 

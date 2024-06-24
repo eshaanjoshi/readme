@@ -16,7 +16,7 @@ def create_md(source):
 def add_img_folder(folder):
     def add_img(filename):
         #return f"<img src=\"/static/{folder}/{filename}\" width=500>"
-        return f"<img src=\"/static/{folder}/{filename}\" style=\"width: 100%; height: auto;\"><br>\n\n"
+        return f"<img src=\"/static/{folder}/{filename}\" style=\"width: 50%; margin-left: 25%; height: auto;\"><br>\n\n"
     return add_img
 
 def replace_double_braces(arg, folder):

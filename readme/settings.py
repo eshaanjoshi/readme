@@ -118,7 +118,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-CSRF_TRUSTED_ORIGINS = ["https://97ff-143-244-44-164.ngrok-free.app/"]
+CSRF_TRUSTED_ORIGINS = ["https://97ff-143-244-44-164.ngrok-free.app", "https://97ff-143-244-44-164.ngrok-free.app/"]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 

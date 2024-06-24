@@ -1,0 +1,230 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+{% endblock page_title %}
+
+{% block page_info %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: #f7f7f700;
+            margin: 0;
+            width: 100%;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .author-container {
+            background-color: #fff;
+            border-radius: 8px;
+            margin-left: -10%;
+            width: 50%;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .author-container {
+                width: 100%;
+            }
+        }
+
+        .author-item {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            list-style: none;
+            text-align: center;
+            display: flex;
+            justify-content: center; /* Center the content horizontally */
+            align-items: center;
+        }
+
+        .author-header {
+            background-color: #fff;
+            border-radius: 8px;
+            list-style: none;
+            text-align: center;
+            display: flex;
+            justify-content: center; /* Center the content horizontally */
+            align-items: center;
+        }
+
+        .author-item2 {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            list-style: none;
+            text-align: center;
+            width: 100%;
+            padding: 10px;
+        }
+
+        .collapsible-btn {
+            background-color: #ccc;
+            color: #333;
+            border: none;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            width: 100%;
+            font-family: 'Special Elite', cursive;
+        }
+
+        .collapsible-btn:hover {
+            background-color: #aaa;
+        }
+
+        .collapsible-content {
+            display: none;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            border-radius: 0 0 8px 8px;
+            font-family: 'Special Elite', cursive;
+        }
+
+        .author-item .collapsible-content {
+            margin-top: 10px;
+        }
+
+        .issue-square {
+            width: 100px;
+            height: 100px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            flex-shrink: 0;
+        }
+
+        .issue-text {
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 1.2;
+        }
+
+        .author-info {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            align-items: center; /* Center the content horizontally */
+            width: 100%;
+        }
+
+        .author-name {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0 0 5px;
+        }
+
+        .author-name a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .author-name a:hover {
+            text-decoration: underline;
+        }
+
+        .author-bio {
+            font-size: 16px;
+            color: #555;
+            margin: 0;
+        }
+
+        .author-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .a {
+            font-family: 'Special Elite', cursive;
+            color: black;
+        }
+        .a:link {
+            font-family: 'Special Elite', cursive;
+            color: black;
+        }
+    </style>
+</head>
+{% endblock page_info %}
+
+{% block page_content %}
+<body>
+    <div class="container">
+        <div class="author-container">
+            <ul class="author-list">
+                <li class="author-header">
+                    <h3><em>Our Greatest Hits</em></h3>
+                </li>
+                {% regroup issues by vol as vol_issues %}
+                {% for vol_issue in vol_issues %}
+                <li class="author-item2">
+                    <div class="collapsible-btn" onclick="toggleVolume(this)">
+                        Vol {{ vol_issue.grouper }}
+                    </div>
+                    <div class="collapsible-content">
+                        {% for issue in vol_issue.list %}
+                        <div class="author-item2">
+                            <div class="collapsible-btn" onclick="toggleIssue(this)">
+                                Issue {{ issue.num }}
+                            </div>
+                            <div class="collapsible-content">
+                                {% for article in issue.articles.all %}
+                                <div class="author-item">
+                                    <div class="author-info">
+                                        <a href="{% url 'article_edit' article.id %}" style="font-family: 'Special Elite', cursive; font-size: 20px; color: black;" onMouseOver="this.style.color='darkred'"
+                                        onMouseOut="this.style.color='black'">EDIT: {{ article.title }}</a>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <script>
+        function toggleVolume(button) {
+            var content = button.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+                button.textContent = button.textContent.replace("Hide", "Show");
+            } else {
+                content.style.display = "block";
+                button.textContent = button.textContent.replace("Show", "Hide");
+            }
+        }
+
+        function toggleIssue(button) {
+            var content = button.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+                button.textContent = button.textContent.replace("Hide", "Show");
+            } else {
+                content.style.display = "block";
+                button.textContent = button.textContent.replace("Show", "Hide");
+            }
+        }
+    </script>
+</body>
+{% endblock page_content %}

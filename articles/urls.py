@@ -7,6 +7,7 @@ urlpatterns = [
     path("authors", views.article_author_index, name="article_author_index"),
     path("tags", views.article_category_index, name="article_category_index"),
     path("issues", views.article_issues_index, name="article_issues_index"),
+    path("editor/issue", views.article_issues_edit, name="article_issues_edit"),
     path("post/<str:slug>/<int:pk>", views.article_detail, name="article_detail"),
     path("category/<category>/", views.article_category, name="article_category"),
     path("author/<author>/", views.article_author, name="article_author"),
@@ -25,4 +26,7 @@ urlpatterns = [
     path('folder/<int:folder_id>/', views.display_folder, name='display_folder'),
     path('folder/<int:folder_id>/upload/', views.upload_image, name='upload_image'),
     path('upload/success/', views.upload_success, name='upload_success'),
+    path('article/new/', views.article_create_or_edit, name='article_create'),
+    path('article/edit/<int:article_id>/', views.article_create_or_edit, name='article_edit'),
+
 ]

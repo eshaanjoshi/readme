@@ -6,7 +6,7 @@ import markdown
 from django.http import HttpResponseRedirect
 from articles.forms import CommentForm, ArticleForm, CategoryForm, UploadImageForm
 from articles.models import Post, Comment, Author, Issue, Category, Folder, UploadedImage
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
@@ -45,12 +45,19 @@ def article_issues_index(request):
         issues_by_volume[volume].append(issue)
     
     return render(request, 'article/issuelist.html', {'issues':issues, 'issues_by_volume': issues_by_volume})
-    #issues = Issue.objects.all().order_by('vol')
-    #context = {
-    #    "issues": issues,
-    #}
-    #return render(request, "article/issuelist.html", context)
 
+
+def article_issues_edit(request):
+    issues = Issue.objects.all().order_by('vol').prefetch_related('articles')
+    issues_by_volume = {}
+
+    for issue in issues:
+        volume = issue.vol
+        if volume not in issues_by_volume:
+            issues_by_volume[volume] = []
+        issues_by_volume[volume].append(issue)
+    
+    return render(request, 'article/issueedit.html', {'issues':issues, 'issues_by_volume': issues_by_volume})
 
 
 def article_category(request, category):
@@ -215,3 +222,22 @@ def upload_image(request, folder_id):
 
 def upload_success(request):
     return render(request, 'article/upload_success.html')
+
+def article_create_or_edit(request, article_id=None):
+    if article_id:
+        article = get_object_or_404(Post, id=article_id)
+    else:
+        article = None
+
+    if request.method == 'POST':
+        form = ArticleForm(request.POST, instance=article)
+        if form.is_valid():
+            form.save()
+            return redirect('article_list')  # Adjust the redirect target as necessary
+    else:
+        form = ArticleForm(instance=article)
+
+    return render(request, 'article/article_form.html', {
+        'form': form,
+        'article': article
+    })

@@ -169,6 +169,9 @@
         
         min-width: viewport width;
     }
+    .a {
+        font-family: 'Special Elite', cursive;
+    }
     </style>
 </head>
 {% endblock page_info %}
@@ -197,7 +200,7 @@
                             </div>
                             <div class="author-info">
                                 <h4 class="author-name">
-                                    <a href="{% url 'article_issue' issue.vol issue.num %}">{{ issue.name }}</a>
+                                    <a href="{% url 'article_issue' issue.vol issue.num %}" style="font-family: 'Special Elite', cursive;">{{ issue.name }}</a>
                                 </h4>
                                 <!-- Add more information here if needed, like author-bio or other details -->
                             </div>

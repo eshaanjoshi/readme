@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+<head>
+    <title>{% if article %}Edit<a href="{% url 'article_detail' article.slug article.pk %}">Go to website</a> {% else %}Create{% endif %} Article</title>
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .content {
+            max-width: 1200px;
+            width: 100%;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .btn {
+            align-self: flex-start;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+{% endblock page_title %}
+
+{% block page_info %}
+<em>Welcome {{ user }}</em>
+{% endblock page_info %}
+
+{% block page_content %}
+<body>
+    <div class="container">
+        <div class="content">
+            <form method="post">
+                {% csrf_token %}
+                {% if article %}
+                    <h2>Edit Article <em>or</em> <a href="{% url 'article_detail' article.slug article.pk %}">Go to website</a></h2>
+                    
+                {% else %}
+                    <h2>Create Article</h2>
+                {% endif %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">{% if article %}Update{% else %}Submit{% endif %}</button>
+            </form>
+        </div>
+    </div>
+</body>
+{% endblock page_content %}

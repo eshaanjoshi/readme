@@ -49,7 +49,7 @@ class Post(models.Model):
     last_modified = models.DateTimeField(auto_now=True)
     categories = models.ManyToManyField("Category", related_name="posts")
     slug = models.SlugField()
-    issues = models.ForeignKey("Issue", on_delete=models.CASCADE)
+    issues = models.ForeignKey("Issue", related_name='articles', on_delete=models.CASCADE)
     def __str__(self) -> str:
         return self.title
 

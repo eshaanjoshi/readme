@@ -1,9 +1,6 @@
-<!-- articles/templates/articles/index.html -->
-
 {% extends "base.html" %}
 
 {% block page_title %}
-
 {% endblock page_title %}
 
 {% block page_info %}
@@ -22,13 +19,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100%;
-        } .author-grid {
+            padding: 20px;
+        }
+        .author-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
             max-width: 800px;
-            padding: 20px;
+            width: 100%;
         }
         .author-card {
             background-color: #fff;
@@ -36,6 +34,7 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 20px;
             text-align: center;
+            list-style: none;
         }
         .author-card img {
             border-radius: 50%;
@@ -61,36 +60,50 @@
             padding: 20px;
             margin-bottom: 20px; /* Space below the card */
         }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            .author-card {
+                padding: 15px;
+            }
+            .author-name {
+                font-size: 18px;
+            }
+            .author-bio {
+                font-size: 13px;
+            }
+            .special-author {
+                padding: 15px;
+            }
+        }
     </style>
 </head>
-
 {% endblock page_info %}
 
 {% block page_content %}
-
 <body>
     <div class="container">
-    <div class="author-grid">
-        <div class="author-card special-author">
-            <h3><em>Our Usual Suspects</em></h3>
-        </div>
+        <div class="author-grid">
+            <div class="author-card special-author">
+                <h3><em>Our Usual Suspects</em></h3>
+            </div>
             {% for author in authors %}
             <li class="author-card">
-                <img src="/static/author/{{ author.img }}"  alt="Author Name">
+                <img src="/static/author/{{ author.img }}" alt="Author Image">
                 <div class="author-info">
-                    <div class="author-name"><h4><a href="{% url 'article_author' author.name %}">{{ author.name }}</div>
-                    <div class="author-bio"></a><b>{{ author.roles}}</b><br>{{ author.bio }}</h4></div>
+                    <div class="author-name">
+                        <h4><a href="{% url 'article_author' author.name %}">{{ author.name }}</a></h4>
+                    </div>
+                    <div class="author-bio">
+                        <b>{{ author.roles }}</b><br>{{ author.bio }}
+                    </div>
                 </div>
             </li>
             {% endfor %}
-        
+        </div>
     </div>
-</div>
 </body>
-    
-        
-             
-        
-   
-   
 {% endblock page_content %}

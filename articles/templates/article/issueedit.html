@@ -1,3 +1,5 @@
+<!-- articles/templates/articles/index.html -->
+
 {% extends "base.html" %}
 
 {% block page_title %}
@@ -39,12 +41,12 @@
         .author-item {
             background-color: #fff;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             list-style: none;
             text-align: center;
             display: flex;
             justify-content: center; /* Center the content horizontally */
             align-items: center;
+            
         }
 
         .author-header {
@@ -79,6 +81,9 @@
             font-weight: bold;
             width: 100%;
             font-family: 'Special Elite', cursive;
+            display: flex;
+            justify-content: space-between; /* Space between the text and the arrow */
+            align-items: center;
         }
 
         .collapsible-btn:hover {
@@ -122,6 +127,10 @@
             text-align: center;
             align-items: center; /* Center the content horizontally */
             width: 100%;
+            border-width: 1px;
+            border-color: black;
+            border-style: solid;
+            border-radius: 8px;
         }
 
         .author-name {
@@ -153,6 +162,26 @@
             box-sizing: border-box;
         }
 
+        .arrow {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.2s;
+        }
+
+        .arrow-down {
+            transform: rotate(0deg);
+        }
+
+        .arrow-up {
+            transform: rotate(180deg);
+        }
+
+        .horizontal-line {
+            width: 75%;
+            border-top: 1px solid #ccc;
+            margin: 20px auto;
+        }
+
         .a {
             font-family: 'Special Elite', cursive;
             color: black;
@@ -178,27 +207,39 @@
                 <li class="author-item2">
                     <div class="collapsible-btn" onclick="toggleVolume(this)">
                         Vol {{ vol_issue.grouper }}
+                        <svg class="arrow arrow-down" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
                     </div>
                     <div class="collapsible-content">
                         {% for issue in vol_issue.list %}
                         <div class="author-item2">
                             <div class="collapsible-btn" onclick="toggleIssue(this)">
                                 Issue {{ issue.num }}
+                                <svg class="arrow arrow-down" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
                             </div>
                             <div class="collapsible-content">
                                 {% for article in issue.articles.all %}
                                 <div class="author-item">
                                     <div class="author-info">
-                                        <a href="{% url 'article_edit' article.id %}" style="font-family: 'Special Elite', cursive; font-size: 20px; color: black;" onMouseOver="this.style.color='darkred'"
-                                        onMouseOut="this.style.color='black'">EDIT: {{ article.title }}</a>
+                                        <a href="{% url 'article_edit' article.id %}" style="font-family: 'Special Elite', cursive; font-size: 20px; color: black;" onMouseOver="this.style.color='darkred'" onMouseOut="this.style.color='black'">EDIT: {{ article.title }}</a>
                                     </div>
                                 </div>
+                                {% if not forloop.last %}
+                                <div class="horizontal-line"></div>
+                                {% endif %}
                                 {% endfor %}
                             </div>
                         </div>
+                        {% if not forloop.last %}
+                        {% endif %}
                         {% endfor %}
                     </div>
                 </li>
+                {% if not forloop.last %}
+                {% endif %}
                 {% endfor %}
             </ul>
         </div>
@@ -206,23 +247,29 @@
     <script>
         function toggleVolume(button) {
             var content = button.nextElementSibling;
+            var arrow = button.querySelector('.arrow');
             if (content.style.display === "block") {
                 content.style.display = "none";
-                button.textContent = button.textContent.replace("Hide", "Show");
+                arrow.classList.remove('arrow-up');
+                arrow.classList.add('arrow-down');
             } else {
                 content.style.display = "block";
-                button.textContent = button.textContent.replace("Show", "Hide");
+                arrow.classList.remove('arrow-down');
+                arrow.classList.add('arrow-up');
             }
         }
 
         function toggleIssue(button) {
             var content = button.nextElementSibling;
+            var arrow = button.querySelector('.arrow');
             if (content.style.display === "block") {
                 content.style.display = "none";
-                button.textContent = button.textContent.replace("Hide", "Show");
+                arrow.classList.remove('arrow-up');
+                arrow.classList.add('arrow-down');
             } else {
                 content.style.display = "block";
-                button.textContent = button.textContent.replace("Show", "Hide");
+                arrow.classList.remove('arrow-down');
+                arrow.classList.add('arrow-up');
             }
         }
     </script>

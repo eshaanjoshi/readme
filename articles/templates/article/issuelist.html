@@ -25,153 +25,155 @@
             width: 100%;
         }
 
-        .author-container { /* Ensure the container takes full width */
-
+        .author-container {
             background-color: #fff;
             border-radius: 8px;
             margin-left: -10%;
             width: 50%;
         }
+
         @media only screen and (max-width: 600px) {
             .author-container {
                 width: 100%;
             }
         }
 
-    .author-item {
-        position: relative; /* Ensure a relative positioning context */
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        list-style: none;
-        text-align: center;
-        display:flex;
-        align-items:center;
-    }
-    .author-square-header {
-        position: relative; /* Ensure a relative positioning context */
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        list-style: none;
-        text-align: center;
-        display:flex;
-        align-items:center;
-    }
-    .author-header {
-        position: relative; /* Ensure a relative positioning context */
-        background-color: #fff;
-        border-radius: 8px;
-        list-style: none;
-        text-align: center;
-        display:flex;
-        align-items:center;
-    }
-    .author-item2 {
-        position: relative; /* Ensure a relative positioning context */
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        list-style: none;
-        text-align: center;
-        width:100%;
-        
-        padding: 10px;
-    }
+        .author-item {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            list-style: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    .collapsible-btn {
-        position: sticky; /* Stick to the top */
-        top: 0; /* Distance from the top */
-        z-index: 1; /* Ensure it's above other content */
-        background-color: #ccc; /* Grey background color */
-        color: #333; /* Text color */
-        border: none;
-        padding: 15px; /* Padding for button */
-        text-align: center; /* Align text to the left */
-        align-items: center;
-        cursor: pointer;
-        border-radius: 8px 8px 8px 8px; /* Rounded corners, only top */
-        font-size: 18px; /* Adjust font size */
-        font-weight: bold; /* Bold text */
-        font-family: 'Special Elite', cursive;
-        width: 100%;
-    }
+        .author-square-header, .author-header {
+            background-color: #fff;
+            border-radius: 8px;
+            list-style: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    .collapsible-btn:hover {
-        background-color: #aaa; /* Darker grey on hover */
-    }
+        .author-item2 {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            list-style: none;
+            text-align: center;
+            width: 100%;
+            padding: 10px;
+        }
 
-    .collapsible-content {
-        display: none; /* Hidden by default */
-        overflow: hidden;
-        transition: max-height 0.2s ease-out;
-        border-radius: 0 0 8px 8px; /* Match the bottom radius */
-        font-family: 'Special Elite', cursive;
-    }
+        .collapsible-btn {
+            background-color: #ccc;
+            color: #333;
+            border: none;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            font-family: 'Special Elite', cursive;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    .author-item .collapsible-content {
-        margin-top: 10px; /* Adjust spacing below button */
-    }
+        .collapsible-btn:hover {
+            background-color: #aaa;
+        }
 
-    .issue-square {
-        width: 100px;
-        height: 100px;
-        background-color: #f0f0f0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        margin-bottom: 10px;
-        margin-top: 10px;
-        flex-shrink: 0;
+        .collapsible-content {
+            display: none;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            border-radius: 0 0 8px 8px;
+            font-family: 'Special Elite', cursive;
+        }
 
-    }
+        .author-item .collapsible-content {
+            margin-top: 10px;
+        }
 
-    .issue-text {
-        font-size: 16px;
-        font-weight: bold;
-        line-height: 1.2;
-    }
+        .issue-square {
+            width: 100px;
+            height: 100px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            flex-shrink: 0;
+        }
 
-    .author-info {
-        display: flex;
-        flex-direction: column;
-        text-align: center;
-    }
+        .issue-text {
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 1.2;
+        }
 
-    .author-name {
-        font-size: 20px;
-        font-weight: 700;
-        margin: 0 0 5px;
-    }
+        .author-info {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
 
-    .author-name a {
-        text-decoration: none;
-        color: #333;
-    }
+        .author-name {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0 0 5px;
+        }
 
-    .author-name a:hover {
-        text-decoration: underline;
-    }
+        .author-name a {
+            text-decoration: none;
+            color: #333;
+        }
 
-    .author-bio {
-        font-size: 16px;
-        color: #555;
-        margin: 0;
-    }
-    .author-list {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%; /* Take full width of parent */
-        box-sizing: border-box; /* Include padding and border in total width */
-    
-        
-        min-width: viewport width;
-    }
-    .a {
-        font-family: 'Special Elite', cursive;
-    }
+        .author-name a:hover {
+            text-decoration: underline;
+        }
+
+        .author-bio {
+            font-size: 16px;
+            color: #555;
+            margin: 0;
+        }
+
+        .author-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .arrow {
+            margin-left: auto;
+            width: 18px;
+            height: 18px;
+            transition: transform 0.2s;
+        }
+
+        .arrow-down {
+            transform: rotate(0deg);
+        }
+
+        .arrow-up {
+            transform: rotate(180deg);
+        }
+
+        .a {
+            font-family: 'Special Elite', cursive;
+        }
     </style>
 </head>
 {% endblock page_info %}
@@ -189,6 +191,9 @@
                 <li class="author-item2">
                     <div class="collapsible-btn" onclick="toggleVolume(this)">
                         Vol {{ vol_issue.grouper }}
+                        <svg class="arrow arrow-down" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
                     </div>
                     <div class="collapsible-content">
                         {% for issue in vol_issue.list %}
@@ -215,12 +220,15 @@
     <script>
         function toggleVolume(button) {
             var content = button.nextElementSibling;
+            var arrow = button.querySelector('.arrow');
             if (content.style.display === "block") {
                 content.style.display = "none";
-                button.textContent = button.textContent.replace("Hide", "Show");
+                arrow.classList.remove('arrow-up');
+                arrow.classList.add('arrow-down');
             } else {
                 content.style.display = "block";
-                button.textContent = button.textContent.replace("Show", "Hide");
+                arrow.classList.remove('arrow-down');
+                arrow.classList.add('arrow-up');
             }
         }
     </script>

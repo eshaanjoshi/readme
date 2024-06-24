@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+<head>
+    <title>Create Article</title>
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin: 0 auto; /* Center align horizontally */
+            padding: 20px; /* Optional: Add padding for spacing */
+        }
+        .content {
+            max-width: 1200px; /* Adjusted max-width for a wider content area */
+            width: 100%;
+        }
+    </style>
+</head>
+{% endblock page_title %}
+
+{% block page_info %}
+<em>Welcome {{ user }}</em>
+{% endblock page_info %}
+
+{% block page_content %}
+<body>
+    <div class="container">
+        <div class="content">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+{% endblock page_content %}

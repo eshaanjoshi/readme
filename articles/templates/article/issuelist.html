@@ -1,0 +1,225 @@
+<!-- articles/templates/articles/index.html -->
+
+{% extends "base.html" %}
+
+{% block page_title %}
+{% endblock page_title %}
+
+{% block page_info %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: #f7f7f700;
+            margin: 0;
+            width: 100%;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .author-container { /* Ensure the container takes full width */
+
+            background-color: #fff;
+            border-radius: 8px;
+            margin-left: -10%;
+            width: 50%;
+        }
+        @media only screen and (max-width: 600px) {
+            .author-container {
+                width: 100%;
+            }
+        }
+
+    .author-item {
+        position: relative; /* Ensure a relative positioning context */
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        list-style: none;
+        text-align: center;
+        display:flex;
+        align-items:center;
+    }
+    .author-square-header {
+        position: relative; /* Ensure a relative positioning context */
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        list-style: none;
+        text-align: center;
+        display:flex;
+        align-items:center;
+    }
+    .author-header {
+        position: relative; /* Ensure a relative positioning context */
+        background-color: #fff;
+        border-radius: 8px;
+        list-style: none;
+        text-align: center;
+        display:flex;
+        align-items:center;
+    }
+    .author-item2 {
+        position: relative; /* Ensure a relative positioning context */
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        list-style: none;
+        text-align: center;
+        width:100%;
+        
+        padding: 10px;
+    }
+
+    .collapsible-btn {
+        position: sticky; /* Stick to the top */
+        top: 0; /* Distance from the top */
+        z-index: 1; /* Ensure it's above other content */
+        background-color: #ccc; /* Grey background color */
+        color: #333; /* Text color */
+        border: none;
+        padding: 15px; /* Padding for button */
+        text-align: center; /* Align text to the left */
+        align-items: center;
+        cursor: pointer;
+        border-radius: 8px 8px 8px 8px; /* Rounded corners, only top */
+        font-size: 18px; /* Adjust font size */
+        font-weight: bold; /* Bold text */
+        font-family: 'Special Elite', cursive;
+        width: 100%;
+    }
+
+    .collapsible-btn:hover {
+        background-color: #aaa; /* Darker grey on hover */
+    }
+
+    .collapsible-content {
+        display: none; /* Hidden by default */
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+        border-radius: 0 0 8px 8px; /* Match the bottom radius */
+        font-family: 'Special Elite', cursive;
+    }
+
+    .author-item .collapsible-content {
+        margin-top: 10px; /* Adjust spacing below button */
+    }
+
+    .issue-square {
+        width: 100px;
+        height: 100px;
+        background-color: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        flex-shrink: 0;
+
+    }
+
+    .issue-text {
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 1.2;
+    }
+
+    .author-info {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .author-name {
+        font-size: 20px;
+        font-weight: 700;
+        margin: 0 0 5px;
+    }
+
+    .author-name a {
+        text-decoration: none;
+        color: #333;
+    }
+
+    .author-name a:hover {
+        text-decoration: underline;
+    }
+
+    .author-bio {
+        font-size: 16px;
+        color: #555;
+        margin: 0;
+    }
+    .author-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%; /* Take full width of parent */
+        box-sizing: border-box; /* Include padding and border in total width */
+    
+        
+        min-width: viewport width;
+    }
+    </style>
+</head>
+{% endblock page_info %}
+
+{% block page_content %}
+<body>
+    <div class="container">
+        <div class="author-container">
+            <ul class="author-list">
+                <li class="author-header">
+                    <h3><em>Our Greatest Hits</em></h3>
+                </li>
+                {% regroup issues by vol as vol_issues %}
+                {% for vol_issue in vol_issues %}
+                <li class="author-item2">
+                    <div class="collapsible-btn" onclick="toggleVolume(this)">
+                        Vol {{ vol_issue.grouper }}
+                    </div>
+                    <div class="collapsible-content">
+                        {% for issue in vol_issue.list %}
+                        <div class="author-item">
+                            <div class="issue-square">
+                                <div class="issue-text">
+                                    Issue {{ issue.num }}
+                                </div>
+                            </div>
+                            <div class="author-info">
+                                <h4 class="author-name">
+                                    <a href="{% url 'article_issue' issue.vol issue.num %}">{{ issue.name }}</a>
+                                </h4>
+                                <!-- Add more information here if needed, like author-bio or other details -->
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <script>
+        function toggleVolume(button) {
+            var content = button.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+                button.textContent = button.textContent.replace("Hide", "Show");
+            } else {
+                content.style.display = "block";
+                button.textContent = button.textContent.replace("Show", "Hide");
+            }
+        }
+    </script>
+</body>
+{% endblock page_content %}

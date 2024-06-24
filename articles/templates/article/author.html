@@ -40,7 +40,8 @@
         <div class="author-stat">
             <p>
             <i data-feather="home"></i>
-            Location: {{a.location}}
+            {% load tag %}
+            Location: {{a.location|imgswitch:"author"|safe}}
           </p>
         </div>
 

@@ -14,7 +14,7 @@ class Category(models.Model):
 
 class Author(models.Model):
     name = models.CharField(max_length=255)
-    img = models.TextField(default="anon.jpg")
+    img = models.TextField(default="anon.png")
     bio = models.TextField(default="Unknowable and Mysterious")
     roles = models.TextField(default="Staffwriter")
     pronouns = models.CharField(max_length=255, default="LEFT_EMPTY")

@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='author',
             name='img',
-            field=models.TextField(default='anon.jpg'),
+            field=models.TextField(default='anon.png'),
         ),
     ]

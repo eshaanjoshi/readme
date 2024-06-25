@@ -92,7 +92,11 @@
             </div>
             {% for author in authors %}
             <li class="author-card">
-                <img src="/static/author/{{ author.img }}" alt="Author Image">
+                {% if author.img == "anon.png" %}
+                    <img src="/static/author/anon.png" style="image-rendering: pixelated;" alt="Author Image">
+                {% else %}
+                    <img src="/static/author/{{ author.img }}" alt="Author Image">
+                {% endif %}
                 <div class="author-info">
                     <div class="author-name">
                         <h4><a href="{% url 'article_author' author.name %}">{{ author.name }}</a></h4>

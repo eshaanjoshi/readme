@@ -43,8 +43,8 @@ def article_issues_index(request):
         if volume not in issues_by_volume:
             issues_by_volume[volume] = []
         issues_by_volume[volume].append(issue)
-    
-    return render(request, 'article/issuelist.html', {'issues':issues, 'issues_by_volume': issues_by_volume})
+    issue = issues
+    return render(request, 'article/issuelist.html', {'issues':issue, 'issues_by_volume': issues_by_volume})
 
 
 def article_issues_edit(request):
@@ -243,7 +243,14 @@ def article_create_or_edit(request, article_id=None):
     })
 
 def article_issues_edit(request):
-    
+    issues = Issue.objects.all().order_by('vol').prefetch_related('articles')
+    issues_by_volume = {}
+
+    for issue in issues:
+        volume = issue.vol
+        if volume not in issues_by_volume:
+            issues_by_volume[volume] = []
+        issues_by_volume[volume].append(issue)
     
     return render(request, 'article/issueedit.html', {'issues':issues, 'issues_by_volume': issues_by_volume})
 

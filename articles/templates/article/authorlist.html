@@ -102,7 +102,7 @@
                         <h4><a href="{% url 'article_author' author.name %}">{{ author.name }}</a></h4>
                     </div>
                     <div class="author-bio">
-                        <b>{{ author.roles }}</b><br>{{ author.bio }}
+                        <b>{{ author.roles }}</b><br>{{ author.bio|truncatechars:100 }}
                     </div>
                 </div>
             </li>

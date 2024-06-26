@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "97ff-143-244-44-164.ngrok-free.app",
     "d033-87-249-134-134.ngrok-free.app",
+    "87cc-128-237-82-14.ngrok-free.app",
     "127.0.0.1"
 ]
 
@@ -118,7 +119,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-CSRF_TRUSTED_ORIGINS = ["https://97ff-143-244-44-164.ngrok-free.app", "https://97ff-143-244-44-164.ngrok-free.app/"]
+CSRF_TRUSTED_ORIGINS = ["https://97ff-143-244-44-164.ngrok-free.app", "https://97ff-143-244-44-164.ngrok-free.app/", "https://87cc-128-237-82-14.ngrok-free.app"]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 

@@ -180,6 +180,8 @@ def article_success_view(request):
 
 
 def create_category(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     if request.method == 'POST':
         form = CategoryForm(request.POST)
         if form.is_valid():
@@ -207,6 +209,8 @@ def display_folder(request, folder_id):
     return render(request, 'article/display_folder.html', {'folder': folder})
 
 def upload_image(request, folder_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
     folder = Folder.objects.get(pk=folder_id)
     if request.method == 'POST':
         form = UploadImageForm(request.POST, request.FILES)
@@ -224,6 +228,8 @@ def upload_success(request):
     return render(request, 'article/upload_success.html')
 
 def article_create_or_edit(request, article_id=None):
+    if not request.user.is_authenticated:
+        return redirect('login')
     if article_id:
         article = get_object_or_404(Post, id=article_id)
     else:
@@ -258,6 +264,8 @@ def article_publish(request):
     issues = Issue.objects.all().order_by('vol').prefetch_related('articles')
     issues_by_volume = {}
 
+    if not request.user.is_authenticated:
+        return redirect('login')
     for issue in issues:
         volume = issue.vol
         if volume not in issues_by_volume:

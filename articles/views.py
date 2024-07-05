@@ -68,23 +68,6 @@ def article_issues_index(request):
     )
 
 
-def article_issues_edit(request):
-    issues = Issue.objects.all().order_by("vol").prefetch_related("articles")
-    issues_by_volume = {}
-
-    for issue in issues:
-        volume = issue.vol
-        if volume not in issues_by_volume:
-            issues_by_volume[volume] = []
-        issues_by_volume[volume].append(issue)
-
-    return render(
-        request,
-        "article/issueedit.html",
-        {"issues": issues, "issues_by_volume": issues_by_volume},
-    )
-
-
 def article_category(request, category):
     posts = (
         Post.objects.filter(categories__name__contains=category)

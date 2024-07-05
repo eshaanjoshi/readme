@@ -32,7 +32,7 @@ def article_index(request):
     context = {
         "posts": posts,
     }
-    return render(request, "article/index.html", context)
+    return render(request, "articles/index.html", context)
 
 
 def article_author_index(request):
@@ -40,7 +40,7 @@ def article_author_index(request):
     context = {
         "authors": authors,
     }
-    return render(request, "article/authorlist.html", context)
+    return render(request, "articles/authorlist.html", context)
 
 
 def article_category_index(request):
@@ -48,7 +48,7 @@ def article_category_index(request):
     context = {
         "categories": categories,
     }
-    return render(request, "article/categorylist.html", context)
+    return render(request, "articles/categorylist.html", context)
 
 
 def article_issues_index(request):
@@ -63,7 +63,7 @@ def article_issues_index(request):
     issue = issues
     return render(
         request,
-        "article/issuelist.html",
+        "articles/issuelist.html",
         {"issues": issue, "issues_by_volume": issues_by_volume},
     )
 
@@ -78,7 +78,7 @@ def article_category(request, category):
         "category": category,
         "posts": posts,
     }
-    return render(request, "article/category.html", context)
+    return render(request, "articles/category.html", context)
 
 
 def article_author(request, author):
@@ -93,7 +93,7 @@ def article_author(request, author):
         "author": author,
         "posts": posts,
     }
-    return render(request, "article/author.html", context)
+    return render(request, "articles/author.html", context)
 
 
 def article_issue(request, vol, num):
@@ -107,7 +107,7 @@ def article_issue(request, vol, num):
         "issue": issue.name,
         "posts": posts,
     }
-    return render(request, "article/issue.html", context)
+    return render(request, "articles/issue.html", context)
 
 
 def article_detail(request, slug, pk):
@@ -134,7 +134,7 @@ def article_detail(request, slug, pk):
         "content": content,
     }
 
-    return render(request, "article/detail.html", context)
+    return render(request, "articles/detail.html", context)
 
 
 def login_view(request):
@@ -147,9 +147,9 @@ def login_view(request):
             return redirect("editor_tools")
         else:
             return render(
-                request, "article/login.html", {"error": "Invalid credentials"}
+                request, "articles/login.html", {"error": "Invalid credentials"}
             )
-    return render(request, "article/login.html")
+    return render(request, "articles/login.html")
 
 
 def logout_view(request):
@@ -165,7 +165,7 @@ def signup_view(request):
             return redirect("login")
     else:
         form = UserCreationForm()
-    return render(request, "article/signup.html", {"form": form})
+    return render(request, "articles/signup.html", {"form": form})
 
 
 @login_required
@@ -173,7 +173,7 @@ def home_view(request):
     user = request.user
     context = {"user": user}
 
-    return render(request, "article/editor_tools.html", context)
+    return render(request, "articles/editor_tools.html", context)
 
 
 def create_article_view(request):
@@ -186,11 +186,11 @@ def create_article_view(request):
             return redirect("article_success")
     else:
         form = ArticleForm()
-    return render(request, "article/create_article.html", {"form": form})
+    return render(request, "articles/create_article.html", {"form": form})
 
 
 def article_success_view(request):
-    return render(request, "article/article_success.html")
+    return render(request, "articles/article_success.html")
 
 
 def create_category(request):
@@ -203,26 +203,26 @@ def create_category(request):
             return redirect("article_category_index")  # Redirect to category list view
     else:
         form = CategoryForm()
-    return render(request, "article/create_category.html", {"form": form})
+    return render(request, "articles/create_category.html", {"form": form})
 
 
 def category_list(request):
     categories = Category.objects.all()
-    return render(request, "article/categorylist.html", {"categories": categories})
+    return render(request, "articles/categorylist.html", {"categories": categories})
 
 
 def editor_tools(request):
-    return render(request, "article/editor_tools.html")
+    return render(request, "articles/editor_tools.html")
 
 
 def folder_list(request):
     folders = Folder.objects.all()
-    return render(request, "article/folder_list.html", {"folders": folders})
+    return render(request, "articles/folder_list.html", {"folders": folders})
 
 
 def display_folder(request, folder_id):
     folder = Folder.objects.get(pk=folder_id)
-    return render(request, "article/display_folder.html", {"folder": folder})
+    return render(request, "articles/display_folder.html", {"folder": folder})
 
 
 def upload_image(request, folder_id):
@@ -240,12 +240,12 @@ def upload_image(request, folder_id):
     else:
         form = UploadImageForm()
     return render(
-        request, "article/upload_image.html", {"form": form, "folder": folder}
+        request, "articles/upload_image.html", {"form": form, "folder": folder}
     )
 
 
 def upload_success(request):
-    return render(request, "article/upload_success.html")
+    return render(request, "articles/upload_success.html")
 
 
 def article_create_or_edit(request, article_id=None):
@@ -267,7 +267,7 @@ def article_create_or_edit(request, article_id=None):
         form = ArticleForm(instance=article)
 
     return render(
-        request, "article/article_form.html", {"form": form, "article": article}
+        request, "articles/article_form.html", {"form": form, "article": article}
     )
 
 
@@ -283,7 +283,7 @@ def article_issues_edit(request):
 
     return render(
         request,
-        "article/issueedit.html",
+        "articles/issueedit.html",
         {"issues": issues, "issues_by_volume": issues_by_volume},
     )
 
@@ -320,4 +320,4 @@ def article_publish(request):
         "issues_by_volume": issues_by_volume,
         "form": form,
     }
-    return render(request, "article/article_publish.html", context)
+    return render(request, "articles/article_publish.html", context)

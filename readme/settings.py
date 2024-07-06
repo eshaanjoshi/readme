@@ -123,7 +123,7 @@ CSRF_TRUSTED_ORIGINS = ["https://97ff-143-244-44-164.ngrok-free.app", "https://9
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'media/static/' # NOTE: this may not be used; we kind of just dump everything into media/static/...
+STATIC_URL = 'static/' # NOTE: don't change this it breaks the codebase LMAO
 STATICFILES_DIRS = [
     BASE_DIR / "media/static/",
 ]

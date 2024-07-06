@@ -78,7 +78,7 @@ def upload_location(instance, filename):
 
 class UploadedImage(models.Model):
     folder = models.ForeignKey(Folder, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
+    name = models.CharField(verbose_name="Destination filename (include extension, like .png)", max_length=100)
     image = models.ImageField(upload_to=upload_location)
 
     def __str__(self):

@@ -6,8 +6,15 @@
 </head>
 <body>
     <h2>Folder Details</h2>
-    <p>Destination filename (include extension, like .png): {{ folder.name }}</p> <!-- NOTE: pretty sure this isn't even used? -->
-    <p>Path: {{ folder.path }}</p>
+    <p>Folder name: {{ folder.name }}</p>
+    <!--<p>Path: {{ folder.path }}</p>-->
+    
+    <h3>Files:</h3>
+    <ul>
+        {% for file in folder.files %}
+            <li>{{ file }}</li>
+        {% endfor %}
+    </ul>
     <!-- You can add more details or functionality here -->
 </body>
 </html>

@@ -21,6 +21,7 @@ urlpatterns = [
     path('create-category/', views.create_category, name='create_category'),
     path('editor/', views.editor_tools, name='editor_tools'),
     path('folders/', views.folder_list, name='folder_list'),
+    path('folders_inspect/', views.folder_list_inspect, name='folder_list_inspect'),
     path('folder/<int:folder_id>/', views.display_folder, name='display_folder'),
     path('folder/<int:folder_id>/upload/', views.upload_image, name='upload_image'),
     path('upload/success/', views.upload_success, name='upload_success'),

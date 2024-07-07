@@ -219,10 +219,14 @@ def editor_tools(request):
 
 
 def folder_list(request):
+    if not request.user.is_authenticated:
+        return redirect("login")
     folders = Folder.objects.all()
     return render(request, "articles/folder_list.html", {"folders": folders})
 
 def folder_list_inspect(request):
+    if not request.user.is_authenticated:
+        return redirect("login")
     folders = Folder.objects.all()
     return render(request, "articles/folder_list_inspect.html", {"folders": folders})
 
@@ -232,6 +236,8 @@ def folder_list_inspect(request):
 #    return render(request, "articles/display_folder.html", {"folder": folder})
 import os
 def display_folder(request, folder_id):
+    if not request.user.is_authenticated:
+        return redirect("login")
     folder = Folder.objects.get(pk=folder_id)
     media_folder_path = f"{settings.MEDIA_ROOT}/static/{folder.path}"
     files = os.listdir(media_folder_path) if os.path.exists(media_folder_path) else []
@@ -294,6 +300,8 @@ def article_create_or_edit(request, article_id=None):
 
 
 def article_issues_edit(request):
+    if not request.user.is_authenticated:
+        return redirect("login")
     issues = Issue.objects.all().order_by("vol").prefetch_related("articles")
     issues_by_volume = {}
 

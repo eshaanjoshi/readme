@@ -212,6 +212,8 @@ def category_list(request):
 
 
 def editor_tools(request):
+    if not request.user.is_authenticated:
+        return redirect("login")
     return render(request, "articles/editor_tools.html")
 
 

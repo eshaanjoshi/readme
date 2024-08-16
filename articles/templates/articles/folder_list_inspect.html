@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Choose Folder</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('select#folder-select-2').change(function() {
+                var folderId = $(this).val();
+                if (folderId) {
+                    window.location.href = '/folder/' + folderId;
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <h2>Choose a Folder</h2>
+    <select id="folder-select-2">
+        <option value="">Select a folder</option>
+        {% for folder in folders %}
+            <option value="{{ folder.id }}">{{ folder.name }}</option>
+        {% endfor %}
+    </select>
+</body>
+</html>

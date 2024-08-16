@@ -1,5 +1,6 @@
 from django.shortcuts import render
 import markdown
+from django.conf import settings
 
 # Create your views here.
 
@@ -212,18 +213,45 @@ def category_list(request):
 
 
 def editor_tools(request):
+    if not request.user.is_authenticated:
+        return redirect("login")
     return render(request, "articles/editor_tools.html")
 
 
 def folder_list(request):
+    if not request.user.is_authenticated:
+        return redirect("login")
     folders = Folder.objects.all()
     return render(request, "articles/folder_list.html", {"folders": folders})
 
+def folder_list_inspect(request):
+    if not request.user.is_authenticated:
+        return redirect("login")
+    folders = Folder.objects.all()
+    return render(request, "articles/folder_list_inspect.html", {"folders": folders})
 
+
+#def display_folder(request, folder_id):
+#    
+#    return render(request, "articles/display_folder.html", {"folder": folder})
+import os
 def display_folder(request, folder_id):
+    if not request.user.is_authenticated:
+        return redirect("login")
     folder = Folder.objects.get(pk=folder_id)
-    return render(request, "articles/display_folder.html", {"folder": folder})
+    media_folder_path = f"{settings.MEDIA_ROOT}/static/{folder.path}"
+    files = os.listdir(media_folder_path) if os.path.exists(media_folder_path) else []
 
+        #files = [f for f in files if os.path.isfile(os.path.join(folder_path, f))]  # Ensure it's a file
+    
+    context = {
+        'folder': {
+            'name': folder.path,#os.path.basename(media_folder_path),
+            'path': media_folder_path,
+            'files': files,
+        }
+    }
+    return render(request, 'articles/display_folder.html', context)
 
 def upload_image(request, folder_id):
     if not request.user.is_authenticated:
@@ -272,6 +300,8 @@ def article_create_or_edit(request, article_id=None):
 
 
 def article_issues_edit(request):
+    if not request.user.is_authenticated:
+        return redirect("login")
     issues = Issue.objects.all().order_by("vol").prefetch_related("articles")
     issues_by_volume = {}
 

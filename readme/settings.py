@@ -15,16 +15,19 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
+import os
+from dotenv import load_dotenv
+env_path = load_dotenv(os.path.join(BASE_DIR, '.env'))
+load_dotenv(env_path)
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-b(v6q4y-e+@7&1i$x%)p!z@+jex%fu#&2d_8&7pn29fqvi85ia'
-
+# SECRET_KEY = 'django-insecure-b(v6q4y-e+@7&1i$x%)p!z@+jex%fu#&2d_8&7pn29fqvi85ia'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-&psk#na5l=p3q8_a+-$4w1f^lt3lx1c@d*p4x$ymm_rn7pwb87')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
+# DEBUG = False
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+print(DEBUG)
 ALLOWED_HOSTS = [
     "97ff-143-244-44-164.ngrok-free.app",
     "d033-87-249-134-134.ngrok-free.app",
@@ -48,6 +51,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -123,7 +127,7 @@ USE_TZ = True
 CSRF_TRUSTED_ORIGINS = ["https://97ff-143-244-44-164.ngrok-free.app", "https://97ff-143-244-44-164.ngrok-free.app/", "https://87cc-128-237-82-14.ngrok-free.app"]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATIC_URL = 'static/' # NOTE: don't change this it breaks the codebase LMAO
 STATICFILES_DIRS = [
     BASE_DIR / "media/static/",
@@ -139,3 +143,18 @@ LOGOUT_REDIRECT_URL = 'login'
 
 MEDIA_URL = '/media/'  # URL prefix for media files
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') 
+
+import dj_database_url
+
+if 'DATABASE_URL' in os.environ:
+    DATABASES['default'] = dj_database_url.config(
+        conn_max_age=500,
+        conn_health_checks=True,
+    )
+
+STORAGES = {
+    # ...
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
